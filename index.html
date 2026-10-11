@@ -88,7 +88,7 @@ footer{max-width:1000px;margin:64px auto 0;padding:28px 24px 48px;border-top:1px
 <div id="home">
   <header class="hero"><div class="hero-inner">
     <h1 id="titel"></h1>
-    <p>Wähle deinen Bewerb. Dort meldest du dich an und siehst Setzliste, Gruppen und Turnierbaum.</p>
+    <p>Wähle deinen Bewerb. Dort findest du die bisherigen Anmeldungen, die Setzliste, die Gruppen und den Turnierbaum.</p>
   </div></header>
   <div class="wrap">
     <div class="facts" id="facts"></div>
@@ -104,32 +104,23 @@ footer{max-width:1000px;margin:64px auto 0;padding:28px 24px 48px;border-top:1px
     <p id="evSub"></p>
   </div></header>
   <nav aria-label="Seitennavigation">
-    <a href="#" data-to="anmeldung">Anmeldung</a>
-    <a href="#" data-to="angemeldet" id="navAng" hidden>Angemeldet</a>
-    <a href="#" data-to="setzliste">Setzliste</a>
+    <a href="#" data-to="angemeldet" id="navAng" hidden>Vorläufige Setzliste</a>
+    <a href="#" data-to="setzliste" id="navSetz">Setzliste</a>
     <a href="#" data-to="gruppen">Gruppen</a>
     <a href="#" data-to="turnierbaum">Turnierbaum</a>
   </nav>
 
-  <section id="anmeldung">
-    <h2>Anmeldung</h2>
-    <p class="lead" id="anmText"></p>
-    <a class="btn dark" id="formLink" target="_blank" rel="noopener">Formular in neuem Tab öffnen</a>
-    <div class="formwrap" id="formWrap"><iframe id="formFrame" title="Anmeldeformular" loading="lazy"></iframe></div>
-    <p class="note" id="formLeer" hidden>Die Anmeldung für diesen Bewerb wird bald freigeschaltet.</p>
-  </section>
-
   <section id="angemeldet" hidden>
-    <h2>Bisher angemeldet</h2>
+    <h2>Vorläufige Setzliste</h2>
     <p class="lead" id="angZahl"></p>
-    <div class="tablewrap"><table><thead><tr><th>Nr.</th><th id="thAng">Name</th></tr></thead><tbody id="angListe"></tbody></table></div>
+    <div class="tablewrap"><table><thead><tr><th>Nr.</th><th id="thAng">Spieler</th><th id="thItn">ITN</th></tr></thead><tbody id="angListe"></tbody></table></div>
     <p class="note" id="angLeer" hidden>Noch keine Anmeldungen.</p>
   </section>
 
   <section id="setzliste">
     <h2>Setzliste</h2>
     <p class="lead">Sortiert nach ITN. Die niedrigste Zahl ist am stärksten.</p>
-    <div class="tablewrap"><table id="setzTabelle"><thead><tr><th>Setznummer</th><th id="thName">Spieler</th><th>ITN</th></tr></thead><tbody></tbody></table></div>
+    <div class="tablewrap"><table id="setzTabelle"><thead><tr><th>Setznummer</th><th id="thName">Spieler</th><th id="thItnS">ITN</th></tr></thead><tbody></tbody></table></div>
     <p class="note" id="setzLeer" hidden>Die Setzliste erscheint zum Turnierstart.</p>
   </section>
 
@@ -164,16 +155,15 @@ const CONFIG = {
   bewerbe: [
     {
       id: "herren-einzel", name: "Herren Einzel", doppel: false,
-      formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfYCdNhYy_wRgurGXfPV2WcmXGYUU0-6Mas8CA15bk4gzMeMw/viewform",
-      anmeldungenCsvUrl: "",  // Sheet: Blatt "Anmeldungen" (nur Namen) > Im Web veröffentlichen > CSV
+      anmeldungenCsvUrl: "",  // Blatt "Anmeldungen" (Formel mit Namen + ITN) > Im Web veröffentlichen > CSV
       nennlisteCsvUrl: "",   // Sheet: Blatt "Nennliste" > Im Web veröffentlichen > CSV
       // Blätter "Gruppe 1", "Gruppe 2", ... jeweils als CSV, in dieser Reihenfolge, z. B. ["https://…", "https://…"]
       gruppenUrls: [],
       turnierbaumUrl: ""     // Sheet: Blatt "K.O. Runde" > Im Web veröffentlichen > Webseite
     },
-    { id: "herren-doppel", name: "Herren Doppel", doppel: true,  formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeLLoqKY4oP9VlBWfMBWSQXebmEsKJ7njEGk3E1iEVa9pegTw/viewform", anmeldungenCsvUrl: "", nennlisteCsvUrl: "", gruppenUrls: [], turnierbaumUrl: "" },
-    { id: "damen-doppel",  name: "Damen Doppel",  doppel: true,  formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSe98vY0e-QZkcTEEUaFok7mt8LiHbu3CAlJYtQGcr9IxnWZYw/viewform", anmeldungenCsvUrl: "", nennlisteCsvUrl: "", gruppenUrls: [], turnierbaumUrl: "" },
-    { id: "mixed-doppel",  name: "Mixed Doppel",  doppel: true,  formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScM7axcyz6r1bP2ERCP_n5bP8kEdqTkn43mdFi0-nLkRoLz4g/viewform", anmeldungenCsvUrl: "", nennlisteCsvUrl: "", gruppenUrls: [], turnierbaumUrl: "" }
+    { id: "herren-doppel", name: "Herren Doppel", doppel: true,  anmeldungenCsvUrl: "", nennlisteCsvUrl: "", gruppenUrls: [], turnierbaumUrl: "" },
+    { id: "damen-doppel",  name: "Damen Doppel",  doppel: true,  anmeldungenCsvUrl: "", nennlisteCsvUrl: "", gruppenUrls: [], turnierbaumUrl: "" },
+    { id: "mixed-doppel",  name: "Mixed Doppel",  doppel: true,  anmeldungenCsvUrl: "", nennlisteCsvUrl: "", gruppenUrls: [], turnierbaumUrl: "" }
   ]
 };
 /* ================================================= */
@@ -218,22 +208,32 @@ function anzeige(b, nach, vor) {
 
 const fn = t => (t || "").toString().trim().toLowerCase().replace(/(^|[\s-])\S/g, m => m.toUpperCase());
 
+const itnZahl = v => { const x = parseFloat(String(v || "").replace(",", ".")); return isNaN(x) ? 10 : x; };
+
 async function ladeAnmeldungen(b) {
-  const aktiv = !!b.anmeldungenCsvUrl && !b.nennlisteCsvUrl;   // nach Turnierstart übernimmt die Setzliste
-  $("angemeldet").hidden = $("navAng").hidden = !aktiv;
   $("angListe").innerHTML = ""; $("angLeer").hidden = true; $("angZahl").textContent = "";
-  if (!aktiv) return;
+  if (!b.anmeldungenCsvUrl || b.nennlisteCsvUrl) return;   // nach Turnierstart übernimmt die endgültige Setzliste
   $("thAng").textContent = b.doppel ? "Team" : "Spieler";
+  $("thItn").textContent = b.doppel ? "Ø ITN" : "ITN";
   try {
     const res = await fetch(b.anmeldungenCsvUrl, { cache: "no-store" });
     const rows = parseCsv(await res.text());
     if (location.hash !== "#/" + b.id) return;
-    const namen = rows.filter(r => r[0] && r[0].trim()).map(r => b.doppel
-      ? `${fn(r[0])} ${kurz(fn(r[1]))} / ${fn(r[2])} ${kurz(fn(r[3]))}`.trim()
-      : `${fn(r[0])} ${kurz(fn(r[1]))}`.trim());
-    $("angListe").innerHTML = namen.map((n, i) => `<tr><td class="num">${i + 1}</td><td>${esc(n)}</td></tr>`).join("");
-    $("angZahl").textContent = namen.length ? `${namen.length} ${b.doppel ? (namen.length === 1 ? "Team" : "Teams") : (namen.length === 1 ? "Spieler" : "Spieler")} angemeldet. Die Liste aktualisiert sich alle paar Minuten.` : "";
-    $("angLeer").hidden = namen.length > 0;
+    const t = rows.filter(r => r[0] && r[0].trim()).map((r, i) => ({
+      i,
+      name: (b.doppel
+        ? `${fn(r[0])} ${kurz(fn(r[1]))} / ${fn(r[3])} ${kurz(fn(r[4]))}`
+        : `${fn(r[0])} ${kurz(fn(r[1]))}`).trim(),
+      itn: b.doppel ? (itnZahl(r[2]) + itnZahl(r[5])) / 2 : itnZahl(r[2])
+    }));
+    t.sort((a, c) => a.itn - c.itn || a.i - c.i);          // niedrigste ITN zuerst, bei Gleichstand nach Anmeldung
+    $("angListe").innerHTML = t.map((x, k) =>
+      `<tr><td class="num">${k + 1}</td><td>${esc(x.name)}</td><td>${String(Math.round(x.itn * 100) / 100).replace(".", ",")}</td></tr>`).join("");
+    const einheit = b.doppel ? (t.length === 1 ? "Team" : "Teams") : (t.length === 1 ? "Spieler" : "Spieler");
+    $("angZahl").textContent = t.length
+      ? `${t.length} ${einheit} angemeldet. Vorläufige Reihenfolge nach ITN. Die endgültige Setzliste und die Gruppen folgen zum Turnierstart.`
+      : "";
+    $("angLeer").hidden = t.length > 0;
   } catch (e) {
     $("angZahl").textContent = "Die Liste konnte nicht geladen werden. Bitte später erneut versuchen.";
   }
@@ -293,17 +293,11 @@ function zeigeBewerb(b) {
   $("evSub").textContent = CONFIG.titel;
   document.title = b.name + " – " + CONFIG.titel;
   $("thName").textContent = b.doppel ? "Team" : "Spieler";
-  $("anmText").textContent = b.doppel
-    ? "Melde dein Team mit beiden Spielern und deren ITN an. Aus allen Anmeldungen entsteht die Setzliste (Ø ITN) und daraus die Gruppeneinteilung."
-    : "Trage dich mit Namen und ITN ein. Aus allen Anmeldungen entsteht die Setzliste und daraus die Gruppeneinteilung.";
+  $("thItnS").textContent = b.doppel ? "Ø ITN" : "ITN";
 
-  const hatForm = !!b.formUrl;
-  $("formWrap").hidden = !hatForm; $("formLink").hidden = !hatForm; $("formLeer").hidden = hatForm;
-  if (hatForm) {
-    const base = b.formUrl.split("?")[0];
-    $("formLink").href = base;
-    $("formFrame").src = base + "?embedded=true";
-  } else { $("formFrame").removeAttribute("src"); }
+  const vorl = !!b.anmeldungenCsvUrl && !b.nennlisteCsvUrl;   // vorläufige Setzliste aus den Anmeldungen
+  $("angemeldet").hidden = $("navAng").hidden = !vorl;
+  $("setzliste").hidden = $("navSetz").hidden = vorl;
 
   $("koWrap").hidden = !b.turnierbaumUrl; $("koLeer").hidden = !!b.turnierbaumUrl;
   if (b.turnierbaumUrl) $("koFrame").src = b.turnierbaumUrl; else $("koFrame").removeAttribute("src");
